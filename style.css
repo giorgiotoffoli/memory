@@ -1,0 +1,106 @@
+:root {
+  --tropical-violet: #a249a469; /* rich orchid violet */
+  --tropical-blue: #00b4d865; /* bright Caribbean aqua */
+  --tropical-yellow: #ffd23f64; /* golden mango yellow */
+  --tropical-green: #30df507a; /* lush tropical mint green */
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: sans-serif;
+  color: white;
+}
+
+body {
+  background: url("./view-transparent-crystal-water.jpg") center no-repeat;
+  background-size: 175% auto;
+}
+
+h2 {
+  margin: 0;
+  padding: 2rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  place-items: center center;
+  max-width: 650px;
+  margin: auto auto;
+}
+
+main > div {
+  width: 300px;
+  height: 300px;
+  backdrop-filter: blur(10px); /* creates the glass blur */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle light border */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* glass depth shadow */
+  border-radius: 8px; /* optional rounding */
+  transition: transform 0.5s ease;
+  transition: 0.5s ease;
+}
+
+main > div:nth-child(1) {
+  background: var(--tropical-violet); /* semi-transparent red */
+}
+main > div:nth-child(1):hover {
+  box-shadow: 0 0px 80px var(--tropical-violet);
+}
+
+main > div:nth-child(2) {
+  background: var(--tropical-blue); /* semi-transparent red */
+}
+main > div:nth-child(2):hover {
+  box-shadow: 0 0px 80px var(--tropical-blue);
+}
+
+main > div:nth-child(3) {
+  background: var(--tropical-green); /* semi-transparent red */
+}
+
+main > div:nth-child(3):hover {
+  box-shadow: 0 0px 80px var(--tropical-green);
+}
+
+main > div:nth-child(4) {
+  background: var(--tropical-yellow); /* semi-transparent red */
+}
+
+main > div:nth-child(4):hover {
+  box-shadow: 0 0px 80px var(--tropical-yellow);
+}
+
+div:hover {
+  cursor: pointer;
+  transform: perspective(900px) rotateY(5deg);
+}
+
+.selected {
+  transform: scale(85%);
+}
+
+section {
+  display: grid;
+}
+
+button {
+  width: 125px;
+  height: 50px;
+  margin: 30px auto;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.068);
+  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle light border */
+  transition: 0.5s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+button:hover {
+  transform: perspective(300px) rotateY(5deg);
+  cursor: pointer;
+  box-shadow: 0 0px 30px rgba(0, 0, 0, 0.318);
+}
