@@ -1,8 +1,8 @@
 :root {
-  --tropical-violet: #a249a469; /* rich orchid violet */
-  --tropical-blue: #00b4d865; /* bright Caribbean aqua */
-  --tropical-yellow: #ffd23f64; /* golden mango yellow */
-  --tropical-green: #30df507a; /* lush tropical mint green */
+  --tropical-violet: #a249a469;
+  --tropical-blue: #00b4d865;
+  --tropical-yellow: #ffd23f64;
+  --tropical-green: #30df507a;
 }
 
 html,
@@ -14,13 +14,14 @@ body {
 }
 
 body {
-  background: url("./view-transparent-crystal-water.jpg") center no-repeat;
+  background: url("./bg.jpg") center no-repeat;
   background-size: 175% auto;
 }
 
 h2 {
   margin: 0;
   padding: 2rem;
+  text-shadow: black 3px 3px 15px;
 }
 
 main {
@@ -35,11 +36,11 @@ main {
 main > div {
   width: 300px;
   height: 300px;
-  backdrop-filter: blur(10px); /* creates the glass blur */
-  -webkit-backdrop-filter: blur(10px); /* Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle light border */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* glass depth shadow */
-  border-radius: 8px; /* optional rounding */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(248, 248, 248, 0.532);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   transition: transform 0.5s ease;
   transition: 0.5s ease;
 }
@@ -83,6 +84,10 @@ div:hover {
   transform: scale(85%);
 }
 
+.noClick {
+  pointer-events: none;
+}
+
 section {
   display: grid;
 }
@@ -93,14 +98,34 @@ button {
   margin: 30px auto;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.068);
-  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle light border */
+  border: 1px solid rgba(248, 248, 248, 0.532);
   transition: 0.5s ease;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  color: rgb(255, 255, 255);
+  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.396);
 }
 
 button:hover {
   transform: perspective(300px) rotateY(5deg);
   cursor: pointer;
   box-shadow: 0 0px 30px rgba(0, 0, 0, 0.318);
+}
+
+.buttonFade {
+  animation: fade 0.3s ease-in-out forwards;
+}
+
+.hide {
+  display: none;
+}
+
+@keyframes fade {
+  from {
+    opacity: 100%;
+  }
+
+  to {
+    opacity: 0%;
+  }
 }

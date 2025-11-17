@@ -1,102 +1,114 @@
 const color = document.querySelectorAll("div");
-const red = document.getElementById("red");
-const yellow = document.getElementById("yellow");
-const green = document.getElementById("green");
-const blue = document.getElementById("blue");
+const topLeft = document.getElementById("1");
+const topRight = document.getElementById("2");
+const bottomLeft = document.getElementById("3");
+const bottomRight = document.getElementById("4");
 const btn = document.querySelector("button");
 const displayScore = document.getElementById("score");
 
+// Declaring arrays
 const pattern = [];
 const userInput = [];
 
-let chooseColor;
-let areTheyEqual;
-
+// Display score
 displayScore.innerText = 0;
 
-function generatePattern() {
-  chooseColor = Math.floor(Math.random() * 4 + 1);
-  switch (chooseColor) {
-    case 1:
-      pattern.push("red");
-      break;
-    case 2:
-      pattern.push("yellow");
-      break;
-    case 3:
-      pattern.push("green");
-      break;
-    case 4:
-      pattern.push("blue");
-
-      break;
+// Styles the squares to show the pattern
+function setStyling() {
+  let seconds;
+  for (let i = 0; i < pattern.length; i++) {
+    setTimeout(() => {
+      switch (pattern[i]) {
+        case 1:
+          chosenColor = topLeft;
+          break;
+        case 2:
+          chosenColor = topRight;
+          break;
+        case 3:
+          chosenColor = bottomLeft;
+          break;
+        case 4:
+          chosenColor = bottomRight;
+          break;
+        default:
+          console.log(chosenColor); // See what chosenColor is, cause this shouldn't happen 😭
+      }
+      chosenColor.classList.add("selected");
+      // waits half a second
+      setTimeout(() => {
+        chosenColor.classList.remove("selected");
+      }, 500);
+    }, i * 1000);
+    seconds = i;
   }
 
-  // Waits 1 second before displaying
+  // Waits until pattern is over to allow clicking
   setTimeout(() => {
-    for (let i = 0; i < pattern.length; i++) {
-      let chosenColor;
-      setTimeout(() => {
-        switch (pattern[i]) {
-          case "red":
-            chosenColor = red;
-            break;
-          case "yellow":
-            chosenColor = yellow;
-
-            break;
-          case "green":
-            chosenColor = green;
-
-            break;
-          case "blue":
-            chosenColor = blue;
-
-            break;
-        }
-        chosenColor.classList.add("selected");
-        setTimeout(() => {
-          chosenColor.classList.remove("selected");
-        }, 500);
-      }, i * 1000);
-    }
-  }, 1000);
+    removeNoClick();
+  }, seconds * 1000 + 1250);
 }
 
-let n = 0;
+const removeNoClick = () => {
+  // Removes noClick class so user can click again after pattern was shown
+  color.forEach((el) => {
+    el.classList.remove("noClick");
+  });
+};
+
+function generatePattern() {
+  // For each color add a noClick class to prevent clicking while pattern is showing
+  color.forEach((el) => {
+    el.classList.add("noClick");
+  });
+
+  // Chooses next color
+  let position = Math.floor(Math.random() * 4 + 1);
+  pattern.push(position);
+
+  // Waits 1 second before displaying selected color
+  setTimeout(() => setStyling(), 1000);
+}
 
 // Start game
-btn.addEventListener("click", () => {
+function startGame() {
+  btn.classList.add("buttonFade");
+
+  // Wait .5 seconds and display: none button
+  setTimeout(() => {
+    btn.classList.add("hide");
+  }, 500);
+
+  // Clearing userInput & pattern array to prevent bugs.
   userInput.splice(0, userInput.length);
   pattern.splice(0, pattern.length);
   generatePattern(); // Start with a color in pattern
+}
 
+// Game logic
+btn.addEventListener("click", () => {
+  startGame();
+
+  // Waits for user to click square
   color.forEach((square) => {
     square.addEventListener("click", () => {
-      userInput.push(square.id); // Adds color to userInput array
-      n = 0;
-      if (userInput.length != pattern.length) {
-        while (n < userInput.length) {
-          if (!(userInput[n] == pattern[n])) {
-            console.log("Game over!");
-          }
-          n++;
-        }
-      } else if (userInput.length == pattern.length) {
-        if (JSON.stringify(userInput) == JSON.stringify(pattern)) {
-          generatePattern();
-          displayScore.innerText = pattern.length - 1;
+      // Add color to userInput array
+      userInput.push(parseFloat(square.id));
 
-          userInput.splice(0, userInput.length);
-          console.log(pattern);
-          console.log(userInput);
-        } else {
-          console.log("game over!");
-          displayScore.innerText = "Game Over";
+      // If all colors are guessed correctly:
+      if (JSON.stringify(userInput) == JSON.stringify(pattern)) {
+        displayScore.innerText = pattern.length; // Score is updated
+        userInput.splice(0, userInput.length); // userInput array is cleared
+        generatePattern(); // Generates new pattern
+      } else {
+        // Checks whether selected color is wrong
+        for (let i = 0; i < userInput.length; i++) {
+          if (userInput[i] != pattern[i]) {
+            // If strings don't match in index
+            displayScore.innerText = "Game over!";
+          }
         }
       }
     });
   });
-  console.log(pattern);
-  console.log(userInput);
 });
